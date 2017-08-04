@@ -19,22 +19,31 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 7489 $ $Date:: 2017-08-02 #$ $Author: serge $
+// $Revision: 7513 $ $Date:: 2017-08-03 #$ $Author: serge $
 
 #ifndef LIB_CONFIG_READER_CONFIG_READER_H
 #define LIB_CONFIG_READER_CONFIG_READER_H
 
 #include <string>                   // std::string
 #include <map>                      // std::map
+#include <stdexcept>                // std::runtime_error
 
 namespace config_reader
 {
 
 class ConfigReader
 {
+    friend class Helper;
+
 public:
-    typedef std::map<std::string, std::string>  MapStrToStr;
-    typedef std::map<std::string, MapStrToStr>  MapStrToMapStrToStr;
+
+    struct exception: public std::runtime_error
+    {
+        explicit exception( const std::string& m ):
+                std::runtime_error( m )
+        {
+        }
+    };
 
 public:
 
@@ -45,10 +54,25 @@ public:
             const std::string & config_file );
 
     bool get_value( std::string * res, const std::string & section_name, const std::string & key_name ) const;
+    bool get_value( std::string * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const;
+
+    bool get_value_converted( std::int16_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
+    bool get_value_converted( std::int32_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
+    bool get_value_converted( std::int64_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
+    bool get_value_converted( std::uint16_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
+    bool get_value_converted( std::uint32_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
+    bool get_value_converted( std::uint64_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
+    bool get_value_converted( float * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
+    bool get_value_converted( double * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
+
+private:
 
     void insert( const std::string & section_name, const std::string & key, const std::string & value );
 
 private:
+
+    typedef std::map<std::string, std::string>  MapStrToStr;
+    typedef std::map<std::string, MapStrToStr>  MapStrToMapStrToStr;
 
     MapStrToMapStrToStr   map_section_to_map_;
 };

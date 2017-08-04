@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 7494 $ $Date:: 2017-08-02 #$ $Author: serge $
+// $Revision: 7510 $ $Date:: 2017-08-03 #$ $Author: serge $
 
 #include <iostream>                         // std::cout
 
@@ -76,6 +76,92 @@ void test_03( const config_reader::ConfigReader & cr )
     }
 }
 
+void test_04( const config_reader::ConfigReader & cr )
+{
+    std::string section( "Section_A" );
+    std::string key( "par_2" );
+
+    std::uint16_t val;
+
+    if( cr.get_value_converted( & val, section, key ) )
+    {
+        std::cout << "OK: key '" << key << "' found = '" << val << "'" << std::endl;
+    }
+    else
+    {
+        std::cout << "ERROR: cannot find key '" << key << "'" << std::endl;
+    }
+}
+
+void test_05( const config_reader::ConfigReader & cr )
+{
+    std::string section( "Section_A" );
+    std::string key( "par_2" );
+
+    std::uint32_t val;
+
+    if( cr.get_value_converted( & val, section, key ) )
+    {
+        std::cout << "OK: key '" << key << "' found = '" << val << "'" << std::endl;
+    }
+    else
+    {
+        std::cout << "ERROR: cannot find key '" << key << "'" << std::endl;
+    }
+}
+
+void test_06( const config_reader::ConfigReader & cr )
+{
+    std::string section( "Section_A" );
+    std::string key( "par_4" );
+
+    float val;
+
+    if( cr.get_value_converted( & val, section, key ) )
+    {
+        std::cout << "OK: key '" << key << "' found = '" << val << "'" << std::endl;
+    }
+    else
+    {
+        std::cout << "ERROR: cannot find key '" << key << "'" << std::endl;
+    }
+}
+
+void test_07( const config_reader::ConfigReader & cr )
+{
+    std::string section( "Section_A" );
+    std::string key( "par_4" );
+
+    double val;
+
+    if( cr.get_value_converted( & val, section, key ) )
+    {
+        std::cout << "OK: key '" << key << "' found = '" << val << "'" << std::endl;
+    }
+    else
+    {
+        std::cout << "ERROR: cannot find key '" << key << "'" << std::endl;
+    }
+}
+
+
+void test_08( const config_reader::ConfigReader & cr )
+{
+    std::string section( "Section_A" );
+    std::string key( "par_5" );
+
+    double val;
+
+    if( cr.get_value_converted( & val, section, key ) )
+    {
+        std::cout << "OK: key '" << key << "' found = '" << val << "'" << std::endl;
+    }
+    else
+    {
+        std::cout << "ERROR: cannot find key '" << key << "'" << std::endl;
+    }
+}
+
 int main()
 {
     config_reader::ConfigReader cr;
@@ -85,6 +171,11 @@ int main()
     test_01( cr );
     test_02( cr );
     test_03( cr );
+    test_04( cr );
+    test_05( cr );
+    test_06( cr );
+    test_07( cr );
+    test_08( cr );
 
     return 0;
 }
