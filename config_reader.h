@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 7513 $ $Date:: 2017-08-03 #$ $Author: serge $
+// $Revision: 7527 $ $Date:: 2017-08-04 #$ $Author: serge $
 
 #ifndef LIB_CONFIG_READER_CONFIG_READER_H
 #define LIB_CONFIG_READER_CONFIG_READER_H
@@ -56,6 +56,7 @@ public:
     bool get_value( std::string * res, const std::string & section_name, const std::string & key_name ) const;
     bool get_value( std::string * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const;
 
+    bool get_value_converted( bool * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
     bool get_value_converted( std::int16_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
     bool get_value_converted( std::int32_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
     bool get_value_converted( std::int64_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
@@ -68,6 +69,9 @@ public:
 private:
 
     void insert( const std::string & section_name, const std::string & key, const std::string & value );
+
+    template <class T>
+    bool get_value_converted_t( T * res, const std::string & section_name, const std::string & key_name, bool throw_on_error = false ) const;
 
 private:
 

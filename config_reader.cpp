@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 7516 $ $Date:: 2017-08-03 #$ $Author: serge $
+// $Revision: 7527 $ $Date:: 2017-08-04 #$ $Author: serge $
 
 #include "config_reader.h"              // self
 
@@ -28,6 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 // for config reading
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/ptree.hpp>        // boost::property_tree::ptree
+
+#include "to_value.h"                   // to_value()
 
 namespace config_reader
 {
@@ -120,7 +122,8 @@ bool ConfigReader::get_value( std::string * res, const std::string & section_nam
     return get_value( res, section_name, key_name, false );
 }
 
-bool ConfigReader::get_value_converted( std::int16_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
+template <class T>
+bool ConfigReader::get_value_converted_t( T * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
 {
     std::string val_str;
 
@@ -129,7 +132,7 @@ bool ConfigReader::get_value_converted( std::int16_t * res, const std::string & 
 
     try
     {
-        * res   = static_cast<std::int16_t>( std::stoi( val_str ) );
+        to_value( res, val_str );
 
         return true;
     }
@@ -140,162 +143,52 @@ bool ConfigReader::get_value_converted( std::int16_t * res, const std::string & 
 
         return false;
     }
+}
+
+bool ConfigReader::get_value_converted( bool * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
+{
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
+}
+
+bool ConfigReader::get_value_converted( std::int16_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
+{
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
 }
 
 bool ConfigReader::get_value_converted( std::int32_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
 {
-    std::string val_str;
-
-    if( get_value( & val_str, section_name, key_name, throw_on_error ) == false )
-        return false;
-
-    try
-    {
-        * res   = static_cast<std::int32_t>( std::stol( val_str ) );
-
-        return true;
-    }
-    catch( std::exception & e )
-    {
-        if( throw_on_error )
-            throw exception( "conversion error: section '" + section_name + "', key '" + key_name + "'" );
-
-        return false;
-    }
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
 }
 
 bool ConfigReader::get_value_converted( std::int64_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
 {
-    std::string val_str;
-
-    if( get_value( & val_str, section_name, key_name, throw_on_error ) == false )
-        return false;
-
-    try
-    {
-        * res   = static_cast<std::int64_t>( std::stoll( val_str ) );
-
-        return true;
-    }
-    catch( std::exception & e )
-    {
-        if( throw_on_error )
-            throw exception( "conversion error: section '" + section_name + "', key '" + key_name + "'" );
-
-        return false;
-    }
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
 }
 
 bool ConfigReader::get_value_converted( std::uint16_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
 {
-    std::string val_str;
-
-    if( get_value( & val_str, section_name, key_name, throw_on_error ) == false )
-        return false;
-
-    try
-    {
-        * res   = static_cast<std::uint16_t>( std::stoul( val_str ) );
-
-        return true;
-    }
-    catch( std::exception & e )
-    {
-        if( throw_on_error )
-            throw exception( "conversion error: section '" + section_name + "', key '" + key_name + "'" );
-
-        return false;
-    }
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
 }
 
 bool ConfigReader::get_value_converted( std::uint32_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
 {
-    std::string val_str;
-
-    if( get_value( & val_str, section_name, key_name, throw_on_error ) == false )
-        return false;
-
-    try
-    {
-        * res   = static_cast<std::uint32_t>( std::stoul( val_str ) );
-
-        return true;
-    }
-    catch( std::exception & e )
-    {
-        if( throw_on_error )
-            throw exception( "conversion error: section '" + section_name + "', key '" + key_name + "'" );
-
-        return false;
-    }
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
 }
 
 bool ConfigReader::get_value_converted( std::uint64_t * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
 {
-    std::string val_str;
-
-    if( get_value( & val_str, section_name, key_name, throw_on_error ) == false )
-        return false;
-
-    try
-    {
-        * res   = static_cast<std::uint64_t>( std::stoull( val_str ) );
-
-        return true;
-    }
-    catch( std::exception & e )
-    {
-        if( throw_on_error )
-            throw exception( "conversion error: section '" + section_name + "', key '" + key_name + "'" );
-
-        return false;
-    }
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
 }
 
 bool ConfigReader::get_value_converted( float * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
 {
-    std::string val_str;
-
-    if( get_value( & val_str, section_name, key_name, throw_on_error ) == false )
-        return false;
-
-    try
-    {
-        * res   = std::stof( val_str );
-
-        return true;
-    }
-    catch( std::exception & e )
-    {
-        if( throw_on_error )
-            throw exception( "conversion error: section '" + section_name + "', key '" + key_name + "'" );
-
-        return false;
-    }
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
 }
 
 bool ConfigReader::get_value_converted( double * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const
 {
-    std::string val_str;
-
-    if( get_value( & val_str, section_name, key_name, throw_on_error ) == false )
-        return false;
-
-    try
-    {
-        * res   = std::stof( val_str );
-
-        return true;
-    }
-    catch( std::exception & e )
-    {
-        if( throw_on_error )
-            throw exception( "conversion error: section '" + section_name + "', key '" + key_name + "'" );
-
-        return false;
-    }
+    return get_value_converted_t( res, section_name, key_name, throw_on_error );
 }
-
 
 void ConfigReader::insert( const std::string & section_name, const std::string & key, const std::string & value )
 {

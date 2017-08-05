@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 7510 $ $Date:: 2017-08-03 #$ $Author: serge $
+// $Revision: 7529 $ $Date:: 2017-08-04 #$ $Author: serge $
 
 #include <iostream>                         // std::cout
 
@@ -162,6 +162,40 @@ void test_08( const config_reader::ConfigReader & cr )
     }
 }
 
+void test_09( const config_reader::ConfigReader & cr )
+{
+    std::string section( "Section_B" );
+    std::string key( "par_4" );
+
+    bool val;
+
+    if( cr.get_value_converted( & val, section, key ) )
+    {
+        std::cout << "OK: key '" << key << "' found = '" << val << "'" << std::endl;
+    }
+    else
+    {
+        std::cout << "ERROR: cannot find key '" << key << "'" << std::endl;
+    }
+}
+
+void test_10( const config_reader::ConfigReader & cr )
+{
+    std::string section( "Section_B" );
+    std::string key( "par_5" );
+
+    bool val;
+
+    if( cr.get_value_converted( & val, section, key ) )
+    {
+        std::cout << "OK: key '" << key << "' found = '" << val << "'" << std::endl;
+    }
+    else
+    {
+        std::cout << "ERROR: cannot find key '" << key << "'" << std::endl;
+    }
+}
+
 int main()
 {
     config_reader::ConfigReader cr;
@@ -176,6 +210,8 @@ int main()
     test_06( cr );
     test_07( cr );
     test_08( cr );
+    test_09( cr );
+    test_10( cr );
 
     return 0;
 }
