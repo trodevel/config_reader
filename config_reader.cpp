@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 7527 $ $Date:: 2017-08-04 #$ $Author: serge $
+// $Revision: 7629 $ $Date:: 2017-08-16 #$ $Author: serge $
 
 #include "config_reader.h"              // self
 
@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/ptree.hpp>        // boost::property_tree::ptree
 
-#include "to_value.h"                   // to_value()
+#include "utils/to_value.h"             // to_value()
 
 namespace config_reader
 {
@@ -132,7 +132,7 @@ bool ConfigReader::get_value_converted_t( T * res, const std::string & section_n
 
     try
     {
-        to_value( res, val_str );
+        utils::to_value( res, val_str );
 
         return true;
     }
