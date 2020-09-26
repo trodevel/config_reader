@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 7629 $ $Date:: 2017-08-16 #$ $Author: serge $
+// $Revision: 13847 $ $Date:: 2020-09-26 #$ $Author: serge $
 
 #include "config_reader.h"              // self
 
@@ -75,7 +75,7 @@ bool ConfigReader::init(
         const std::string & config_file )
 {
     if( config_file.empty() )
-        return false;
+        throw std::runtime_error( "ConfigReader: config_file is not given" );
 
     boost::property_tree::ptree pt;
 
