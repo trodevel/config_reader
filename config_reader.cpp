@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 13847 $ $Date:: 2020-09-26 #$ $Author: serge $
+// $Revision: 13867 $ $Date:: 2020-09-26 #$ $Author: serge $
 
 #include "config_reader.h"              // self
 
@@ -71,7 +71,7 @@ ConfigReader::~ConfigReader()
 {
 }
 
-bool ConfigReader::init(
+void ConfigReader::init(
         const std::string & config_file )
 {
     if( config_file.empty() )
@@ -82,8 +82,6 @@ bool ConfigReader::init(
     boost::property_tree::ini_parser::read_ini( config_file, pt );
 
     Helper::extract_section( this, pt );
-
-    return true;
 }
 
 bool ConfigReader::get_value( std::string * res, const std::string & section_name, const std::string & key_name, bool throw_on_error ) const

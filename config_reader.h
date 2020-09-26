@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-// $Revision: 7527 $ $Date:: 2017-08-04 #$ $Author: serge $
+// $Revision: 13867 $ $Date:: 2020-09-26 #$ $Author: serge $
 
 #ifndef LIB_CONFIG_READER_CONFIG_READER_H
 #define LIB_CONFIG_READER_CONFIG_READER_H
@@ -50,7 +50,7 @@ public:
     ConfigReader();
     ~ConfigReader();
 
-    bool init(
+    void init(
             const std::string & config_file );
 
     bool get_value( std::string * res, const std::string & section_name, const std::string & key_name ) const;
